@@ -14,7 +14,7 @@ requests_log.setLevel(logging.DEBUG)
 requests_log.propagate = True
 
 
-KARAPACE_URL = "http://localhost:8081"
+KARAPACE_URL = "http://localhost:8080"
 
 
 def get_all():
@@ -53,10 +53,13 @@ CUSTOMER_PROTO = """
 syntax = "proto3";
 package a1;
 import "place.proto";
+import "google/type/postal_address.proto";
+// @producer: another comment
 message Customer {
         string name = 1;
         int32 code = 2;
         Place place = 3;
+        google.type.PostalAddress address = 4;
 }
 """
 
@@ -70,9 +73,36 @@ customer_data = {
     }]
 }
 
+CUSTOMER_PROTO_UPDATED = """
+syntax = "proto3";
+package a1;
+import "place.proto";
+import "google/type/postal_address.proto";
+// @consumer: the comment was incorrect, updating it now
+message Customer {
+        string name = 1;
+        int32 code = 2;
+        Place place = 3;
+        google.type.PostalAddress address = 4;
+}
+"""
+
+customer_data_updated = {
+    "schema": CUSTOMER_PROTO_UPDATED,
+    "schemaType": "PROTOBUF",
+    "references": [{
+        "name": "place.proto",
+        "subject": "place",
+        "version": -1,
+    }]
+}
+
+
 logging.debug(">>>> List existing schemas")
 get_all()
 logging.debug(">>>> Registering place proto")
 register("place", customer_place_data)
 logging.debug(">>>> Registering customer proto")
 register("customer", customer_data)
+logging.debug(">>>> Registering customer proto update")
+register("customer", customer_data_updated)
