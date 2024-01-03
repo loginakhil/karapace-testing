@@ -84,6 +84,11 @@ message Customer {
         int32 code = 2;
         Place place = 3;
         google.type.PostalAddress address = 4;
+        Test test = 5;
+}
+
+message Test {
+        int32 id = 1;
 }
 """
 
@@ -96,6 +101,7 @@ customer_data_updated = {
         "version": -1,
     }]
 }
+
 
 
 logging.debug(">>>> List existing schemas")
