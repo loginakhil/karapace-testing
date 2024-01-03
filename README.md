@@ -4,6 +4,8 @@
 ### Reproduce the issue
 
 ```sh
+make test-with-confluent
+make clean
 make test
 ```
 
