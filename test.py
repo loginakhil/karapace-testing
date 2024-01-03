@@ -73,17 +73,37 @@ customer_data = {
     }]
 }
 
+DETAIL_PROTO = """
+syntax = "proto3";
+package a1;
+message Detail {
+    string purchase_order_id = 1;
+    string purchase_order_reference = 2;
+    uint32 quantity = 3;
+}
+"""
+
+
+detail_data = {
+    "schema": DETAIL_PROTO,
+    "schemaType": "PROTOBUF",
+}
+
+
 CUSTOMER_PROTO_UPDATED = """
 syntax = "proto3";
 package a1;
 import "place.proto";
+import "detail.proto";
 import "google/type/postal_address.proto";
+
 // @consumer: the comment was incorrect, updating it now
 message Customer {
         string name = 1;
         int32 code = 2;
         Place place = 3;
-        google.type.PostalAddress address = 4;
+        google.type.PostalAddress address = 4;        
+        Detail details = 5;
 }
 """
 
@@ -93,6 +113,10 @@ customer_data_updated = {
     "references": [{
         "name": "place.proto",
         "subject": "place",
+        "version": -1,
+    },{
+        "name": "detail.proto",
+        "subject": "detail",
         "version": -1,
     }]
 }
@@ -104,5 +128,7 @@ logging.debug(">>>> Registering place proto")
 register("place", customer_place_data)
 logging.debug(">>>> Registering customer proto")
 register("customer", customer_data)
+logging.debug(">>>> Registering detail proto")
+register("detail", detail_data)
 logging.debug(">>>> Registering customer proto update")
 register("customer", customer_data_updated)
