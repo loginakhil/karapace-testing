@@ -83,12 +83,7 @@ message Test {
 
 test_data = {
     "schema": TEST_PROTO,
-    "schemaType": "PROTOBUF",
-    "references": [{
-        "name": "test.proto",
-        "subject": "test",
-        "version": -1,
-    }]
+    "schemaType": "PROTOBUF"
 }
 
 CUSTOMER_PROTO_UPDATED = """
