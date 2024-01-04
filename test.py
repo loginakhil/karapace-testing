@@ -73,10 +73,24 @@ customer_data = {
     }]
 }
 
+TEST_PROTO= """
+syntax = "proto3";
+package a1;
+message Test {
+        int32 id = 1;
+}
+"""
+
+test_data = {
+    "schema": TEST_PROTO,
+    "schemaType": "PROTOBUF"
+}
+
 CUSTOMER_PROTO_UPDATED = """
 syntax = "proto3";
 package a1;
 import "place.proto";
+import "test.proto";
 import "google/type/postal_address.proto";
 // @consumer: the comment was incorrect, updating it now
 message Customer {
@@ -86,10 +100,6 @@ message Customer {
         google.type.PostalAddress address = 4;
         Test test = 5;
 }
-
-message Test {
-        int32 id = 1;
-}
 """
 
 customer_data_updated = {
@@ -98,6 +108,10 @@ customer_data_updated = {
     "references": [{
         "name": "place.proto",
         "subject": "place",
+        "version": -1,
+    },{
+        "name": "test.proto",
+        "subject": "test",
         "version": -1,
     }]
 }
@@ -110,5 +124,7 @@ logging.debug(">>>> Registering place proto")
 register("place", customer_place_data)
 logging.debug(">>>> Registering customer proto")
 register("customer", customer_data)
+logging.debug(">>>> Registering test proto")
+register("test", test_data)
 logging.debug(">>>> Registering customer proto update")
 register("customer", customer_data_updated)
