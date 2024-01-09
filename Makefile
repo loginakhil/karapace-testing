@@ -29,6 +29,7 @@ test-case-3: clean deps test-with-karapace
 # Test Case 4
 # this test case is representation of workaround for the issue in test case 3
 # simply we separate child message to different proto and import in parent proto
+# this workaround works successfully as expected
 .PHONY:
 test-case-4: clean deps test-with-karapace
 	python3 test_case_4.py
