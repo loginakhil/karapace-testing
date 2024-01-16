@@ -47,7 +47,7 @@ def set_compatibility(subject, compatibility_type):
 # Test Case 4 - Fuga 
 FUGA_PROTO = """
 syntax = "proto3";
-package tc4;
+package tc5;
 
 import "google/protobuf/timestamp.proto";
 
@@ -109,7 +109,7 @@ fuga_data = {
 # Test Case 4 - Toto 
 TOTO_PROTO = """
 syntax = "proto3";
-package tc4;
+package tc5;
 message Toto {
   string id = 1;
   string ref = 2;
@@ -125,7 +125,7 @@ toto_data = {
 # Test Case 4 -  Fuga Updated
 FUGA_UPDATED_PROTO = """
 syntax = "proto3";
-package tc4;
+package tc5;
 
 import "toto.proto";
 import "google/protobuf/timestamp.proto";
