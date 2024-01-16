@@ -1,15 +1,23 @@
 # karapace-testing
 
+### Issue
 
-### Reproduce the issue
+To reproduce the issue run the following command.
 
 ```sh
-make test-with-confluent
-make clean
-make test
+make test-case-5
 ```
 
+To run the same usecase on confluent schema registry run the following command.
 
-### Log file from my previous run 
+```sh
+make test-case-6
+```
 
-[logs.txt](./logs.txt)
+### Questionnaire
+
+To reproduce the case run the following command.
+
+```sh
+make test-case-1
+```
