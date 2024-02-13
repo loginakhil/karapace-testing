@@ -63,7 +63,7 @@ foo_data = {
 FOO_UPDATED_PROTO = """
 syntax = "proto3";
 package tc7;
-message Qux {
+message Foo {
     string id = 1;
     string city = 2;
     string name = 3;
