@@ -124,6 +124,22 @@ baz_modified_data = {
         "version": -1,
     }]
 }
+
+# Test Case 8 - Foo modified
+FOO_MODIFIED_PROTO = """
+syntax = "proto3";
+package tc1;
+message Foo {
+    string id = 1;
+    string name = 2;
+}
+"""
+
+foo_modified_data = {
+    "schema": FOO_MODIFIED_PROTO,
+    "schemaType": "PROTOBUF",
+}
+
 ################# First registration
 logging.info(">>>> Registering foo proto")
 register("foo", foo_data)
@@ -146,7 +162,7 @@ register("baz", baz_data)
 logging.info("Schema version information after re-upload")
 logging.info("\n"+get_all_schema_info())
 
-################# Modification
+################# Modification of the referencing proto
 
 logging.info(">>>> Registering foo proto")
 register("foo", foo_data)
@@ -155,5 +171,17 @@ register("bar", bar_data)
 logging.info(">>>> Registering baz proto")
 register("baz", baz_modified_data)
 
-logging.info("Schema version information after modification")
+logging.info("Schema version information after modification of the referencing proto")
+logging.info("\n"+get_all_schema_info())
+
+################# Modification of the referenced proto
+
+logging.info(">>>> Registering foo proto")
+register("foo", foo_modified_data)
+logging.info(">>>> Registering bar proto")
+register("bar", bar_data)
+logging.info(">>>> Registering baz proto")
+register("baz", baz_modified_data)
+
+logging.info("Schema version information after modification of the referenced proto")
 logging.info("\n"+get_all_schema_info())
