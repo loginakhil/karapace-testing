@@ -180,6 +180,12 @@ logging.info(">>>> Registering foo proto")
 register("foo", foo_modified_data)
 logging.info(">>>> Registering bar proto")
 register("bar", bar_data)
+
+logging.info("Schema version information after modification of the referenced proto")
+logging.info("\n"+get_all_schema_info())
+
+################# Reregistering the referencing proto
+
 logging.info(">>>> Registering baz proto")
 register("baz", baz_modified_data)
 
