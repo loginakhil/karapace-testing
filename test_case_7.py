@@ -63,7 +63,7 @@ foo_data = {
 FOO_UPDATED_PROTO = """
 syntax = "proto3";
 package tc7;
-message Qux {
+message Foo {
     string id = 1;
     string city = 2;
     string name = 3;
@@ -78,7 +78,7 @@ foo_updated_data = {
 logging.debug(">>>> foo proto")
 register("foo", foo_data)
 
-set_compatibility("foo", "BACKWARD_TRANSITIVE")
+set_compatibility("foo", "FULL_TRANSITIVE")
 
 logging.debug(">>>> Registering foo updated proto")
 register("foo", foo_updated_data)

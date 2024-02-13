@@ -19,7 +19,7 @@ services:
       - "29092:29092"
 
   registry:
-    image: ghcr.io/aiven/karapace:latest
+    image: ghcr.io/aiven-open/karapace:3.10.8
     entrypoint:
       - /bin/bash
       - /opt/karapace/start.sh
