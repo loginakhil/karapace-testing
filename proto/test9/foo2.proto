@@ -1,0 +1,10 @@
+syntax = "proto3";
+package tc9;
+
+message Foo {
+  string id = 1;
+}
+
+message Bar {
+  string name = 1;
+}
