@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package message;
+option go_package = "./message/v1;message";
+
+message EnvelopeV1 {
+  string sender = 1;
+  oneof contents {
+    string message = 2;
+  }
+}

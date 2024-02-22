@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package message;
+option go_package = "./message/v2;message";
+
+message EnvelopeV2 {
+  string sender = 1;
+  oneof contents {
+    string message = 2;
+    string encoded_image = 3;
+  }
+}
