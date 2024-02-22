@@ -1,4 +1,4 @@
-.PHONY:
+.PHONY: deps
 deps:
 	@pip3 install --user --ignore-installed requests
 
@@ -7,13 +7,13 @@ deps:
 # it has "oneof" attribute to handle multiple event types
 # first "foo" is added
 # then if we try to add "bar" as a new type under oneof, we receive compatibility error
-.PHONY:
+.PHONY: test-case-1
 test-case-1: clean deps test-with-karapace
 	python3 test_case_1.py
 
 # Test Case 2
 # same case with Test Case 1 but runs with confluent
-.PHONY:
+.PHONY: test-case-2
 test-case-2: clean deps test-with-confluent
 	python3 test_case_2.py
 
@@ -22,7 +22,7 @@ test-case-2: clean deps test-with-confluent
 # we receive compatibility error since adding new message type is not compatible
 # to solve it we can create separate proto for "Corge" and import in parent proto
 # please check Test Case 4 for this workaround
-.PHONY:
+.PHONY: test-case-3
 test-case-3: clean deps test-with-karapace
 	python3 test_case_3.py
 
@@ -30,7 +30,7 @@ test-case-3: clean deps test-with-karapace
 # this test case is representation of workaround for the issue in test case 3
 # simply we separate child message to different proto and import in parent proto
 # this workaround works successfully as expected
-.PHONY:
+.PHONY: test-case-4
 test-case-4: clean deps test-with-karapace
 	python3 test_case_4.py
 
@@ -38,33 +38,51 @@ test-case-4: clean deps test-with-karapace
 # please check "Fuga" proto, it has messages, enums etc.
 # if we add new message by importing as we do in previous test case, it gets error 500
 # it looks parsing issue on karapace side
-.PHONY:
+.PHONY: test-case-5
 test-case-5: clean deps test-with-karapace
 	python3 test_case_5.py
 
 # Test Case 6
 # same test case with #5 but runs on confluent
 # it works well
-.PHONY:
+.PHONY: test-case-6
 test-case-6: clean deps test-with-confluent
 	python3 test_case_6.py
 
 # Test Case 7
-.PHONY:
+.PHONY: test-case-7
 test-case-7: clean deps test-with-karapace
 	python3 test_case_7.py
 
-.PHONY:
+# Test Case 8
+# test saving same schema again
+.PHONY: test-case-8
+test-case-8: clean deps test-with-karapace
+	python3 test_case_8.py
+
+.PHONY: test-case-10
+test-case-10: clean deps test-with-karapace
+	python3 test_case_10.py
+
+.PHONY: test-with-confluent
 test-with-confluent: deps
 	@docker-compose -f confluent-docker-compose.yml up --detach --wait
 
-.PHONY:
+.PHONY: test-with-karapace
 test-with-karapace: deps
 	@docker-compose up --detach --wait
 
-.PHONY:
+.PHONY: clean
 clean:
 	@docker-compose stop
 	@docker-compose -f confluent-docker-compose.yml stop
 	@docker-compose rm --force
 	@docker-compose -f confluent-docker-compose.yml rm --force
+
+.PHONY: compile-proto
+compile-proto:
+	@docker run --rm -v $(PWD)/proto:/proto --workdir /proto bufbuild/buf:1.26.1 generate --template '{"version":"v1","plugins":[{"plugin":"buf.build/protocolbuffers/go:v1.31.0","out":"."}]}'
+
+.PHONY: test-proto-compatibility
+test-proto-compatibility:
+	@go test ./...
