@@ -60,6 +60,10 @@ test-case-7: clean deps test-with-karapace
 test-case-8: clean deps test-with-karapace
 	python3 test_case_8.py
 
+.PHONY: test-case-10
+test-case-10: clean deps test-with-karapace
+	python3 test_case_10.py
+
 .PHONY: test-with-confluent
 test-with-confluent: deps
 	@docker-compose -f confluent-docker-compose.yml up --detach --wait
